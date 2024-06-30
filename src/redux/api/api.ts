@@ -13,14 +13,18 @@ export const baseApi = createApi({
                 if(priority){
                     params.append('priority', priority);
                 }
-
+                
               return {
                 url: `/tasks`,
                 method: 'GET',
                 params: params,
+                
               }
+              
             },
+            // transformResponse
             providesTags: ['todo'],
+            
         }),
         addTodo: builder.mutation({
             query:(data) => {
@@ -42,8 +46,19 @@ export const baseApi = createApi({
                 };
             },
             invalidatesTags: ['todo'],
-        })
+        }),
+    deleteTodo: builder.mutation({
+        query: (data) => {
+            console.log('inside api',data);
+            return {
+                url: `/task/${data}`,
+                method: 'DELETE',
+                
+            };
+        },
+        invalidatesTags: ['todo'],
+    })
     }),
 });
 
-export const { useGetTodosQuery, useAddTodoMutation, useUpdateTodoMutation } = baseApi;
+export const { useGetTodosQuery, useAddTodoMutation, useUpdateTodoMutation, useDeleteTodoMutation } = baseApi;
